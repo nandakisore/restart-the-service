@@ -32,7 +32,7 @@ steps:
 
   # Create a folder in a specific directory (PowerShell)
 - powershell: |
-    $folderPath = "C:\path\to\directory\NewFolder"
+    $folderPath = "C:\PIpelineworks"
     if (!(Test-Path -Path $folderPath)) {
         New-Item -ItemType Directory -Path $folderPath
     }

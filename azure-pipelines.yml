@@ -13,6 +13,18 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-# Run Chrome to open YouTube
-- powershell: Start-Process "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" "https://www.youtube.com"
+# Diagnostic step to print environment variables (PowerShell)
+- powershell: Get-ChildItem Env:
+  displayName: 'Print environment variables'
+
+# Diagnostic step to print agent details (PowerShell)
+- powershell: |
+    Write-Host "Agent Name: $env:AGENT_NAME"
+    Write-Host "Agent Machine Name: $env:AGENT_MACHINENAME"
+    Write-Host "Agent OS: $env:AGENT_OS"
+    Write-Host "Agent OS Architecture: $env:AGENT_OSARCHITECTURE"
+  displayName: 'Print agent details'
+
+# Run Chrome to open YouTube on Windows
+- powershell: Start-Process "chrome.exe" "https://www.youtube.com"
   displayName: 'Run YouTube in Chrome'

@@ -14,7 +14,8 @@ steps:
   displayName: 'Run a multi-line script'
 
 # Diagnostic step to print environment variables (PowerShell)
-- powershell: Get-ChildItem Env:
+- powershell: |
+    Get-ChildItem Env:
   displayName: 'Print environment variables'
 
 # Diagnostic step to print agent details (PowerShell)

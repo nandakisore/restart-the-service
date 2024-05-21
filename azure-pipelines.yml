@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest  # Change this to 'windows-latest' if you're using a Windows VM
+  vmImage: windows-latest  # Change this to 'windows-latest' if you're using a Windows VM
 
 steps:
 - script: echo Hello, world!

@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest  # Change this to 'windows-latest' if you're using a Windows VM
 
 steps:
 - script: echo Hello, world!
@@ -13,18 +13,26 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-# Diagnostic step to print environment variables (PowerShell)
-- powershell: Get-ChildItem Env:
+# Diagnostic step to print environment variables
+- script: printenv
   displayName: 'Print environment variables'
 
-# Diagnostic step to print agent details (PowerShell)
-- powershell: |
-    Write-Host "Agent Name: $env:AGENT_NAME"
-    Write-Host "Agent Machine Name: $env:AGENT_MACHINENAME"
-    Write-Host "Agent OS: $env:AGENT_OS"
-    Write-Host "Agent OS Architecture: $env:AGENT_OSARCHITECTURE"
+# Diagnostic step to print agent details
+- script: |
+    echo "Agent Name: $AGENT_NAME"
+    echo "Agent Machine Name: $AGENT_MACHINENAME"
+    echo "Agent OS: $AGENT_OS"
+    echo "Agent OS Architecture: $AGENT_OSARCHITECTURE"
   displayName: 'Print agent details'
 
-# Run Chrome to open YouTube on Windows
-- powershell: Start-Process "chrome.exe" "https://www.youtube.com"
+# Install Chrome on Ubuntu
+- script: |
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt-get update
+    sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+  displayName: 'Install Google Chrome'
+
+# Run Chrome to open YouTube on Ubuntu
+- script: |
+    google-chrome --no-sandbox --disable-gpu https://www.youtube.com &
   displayName: 'Run YouTube in Chrome'

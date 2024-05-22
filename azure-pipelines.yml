@@ -7,32 +7,10 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-# Diagnostic step to print environment variables (PowerShell)
-- powershell: |
-    Get-ChildItem Env:
-  displayName: 'Print environment variables'
-
-# Diagnostic step to print agent details (PowerShell)
-- powershell: |
-    Write-Host "Agent Name: $env:AGENT_NAME"
-    Write-Host "Agent Machine Name: $env:AGENT_MACHINENAME"
-    Write-Host "Agent OS: $env:AGENT_OS"
-    Write-Host "Agent OS Architecture: $env:AGENT_OSARCHITECTURE"
-  displayName: 'Print agent details'
-
-# Run Chrome to open YouTube on Windows
-- powershell: Start-Process "chrome.exe" "https://www.youtube.com"
-  displayName: 'Run YouTube in Chrome'
-
+  
   # Create a folder in a specific directory (PowerShell)
 - powershell: |
-    $folderPath = "C:\PIpelineworks"
+    $folderPath = "C:\PIpelineworks1"
     if (!(Test-Path -Path $folderPath)) {
         New-Item -ItemType Directory -Path $folderPath
     }

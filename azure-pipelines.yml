@@ -10,7 +10,7 @@ steps:
   
   # Create a folder in a specific directory (PowerShell)
 - powershell: |
-    $folderPath = "C:\PIpelineworks1"
+    $folderPath = "C:\test1"
     if (!(Test-Path -Path $folderPath)) {
         New-Item -ItemType Directory -Path $folderPath
     }

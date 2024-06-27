@@ -2,26 +2,24 @@ trigger:
 - main
 
 pool:
-  name: 'Pipeline'
+  name: $(vm)
+
+variables:
+  vm: 'default_vm'  # Default value, will be overridden by the Python script
+  service: 'default_service'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    echo "Running on VM: $(vm)"
+  displayName: 'Display VM Name'
 
 - task: PowerShell@2
   inputs:
-    targetType: 'inline'
-    script: |
-      try {
+      targetType: 'inline'
+      script: |
         Write-Output "Starting the restart process..."
-        Write-Information "Attempting to import module..."
-        Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\160\Service\NavAdminTool.ps1" -ErrorAction Stop
+        Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\160\Service\NavAdminTool.ps1"
         Write-Output "Module imported successfully."
-        Write-Information "Issuing restart command..."
-        Restart-NAVServerInstance Kencotemp
-        Write-Output "Restart command issued for Kencotemp."
-      } catch {
-        Write-Error "An error occurred: $_"
-        throw
-      }
+        Restart-NAVServerInstance $(service)
+        Write-Output "Restart command issued for $(service)."
   displayName: 'Restart NAV Server Instance'

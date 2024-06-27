@@ -4,9 +4,7 @@ trigger:
 pool:
   name: $(vm)
 
-variables:
-  vm: 'default_vm'  # Default value, will be overridden by the Python script
-  service: 'default_service'
+
 
 steps:
 - script: |

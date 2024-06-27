@@ -2,16 +2,26 @@ trigger:
 - main
 
 pool:
-  name: Pipeline
+  vmImage: 'windows-latest'
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-  
-  # Create a folder in a specific directory (PowerShell)
-- powershell: |
-    $folderPath = "C:\test1"
-    if (!(Test-Path -Path $folderPath)) {
-        New-Item -ItemType Directory -Path $folderPath
-    }
-  displayName: 'Create a folder in the directory'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      try {
+        Write-Output "Starting the restart process..."
+        Write-Information "Attempting to import module..."
+        Import-Module "C:\Program Files\Microsoft Dynamics 365 Business Central\160\Service\NavAdminTool.ps1" -ErrorAction Stop
+        Write-Output "Module imported successfully."
+        Write-Information "Issuing restart command..."
+        Restart-NAVServerInstance Kencotemp
+        Write-Output "Restart command issued for Kencotemp."
+      } catch {
+        Write-Error "An error occurred: $_"
+        throw
+      }
+  displayName: 'Restart NAV Server Instance'
